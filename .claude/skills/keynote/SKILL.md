@@ -17,9 +17,8 @@ Show me the slide structure
 
 ### Modify Content
 ```
-Change the title on slide 1 to "My Presentation"
-Set the body text on slide 2 to bullet points
-Replace the image on slide 3
+Replace "old text" with "new text" on slide 1
+Change the text "Title" to "New Title" on slide 2
 ```
 
 ### Add/Remove Slides
@@ -32,3 +31,22 @@ Delete slide 5
 
 Uses AppleScript to control Keynote on macOS.
 
+**Key features:**
+- Reads ALL text boxes on each slide (works with Blank layout templates)
+- Finds and replaces text by content matching
+- Supports all Keynote layouts
+
+**Important Notes:**
+- Slides are numbered starting from 1
+- Text replacement matches partial content
+- Works with both standard and Blank layouts
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `open.scpt` | Open a .key file |
+| `info.scpt` | Show all slides and text content |
+| `set_text.scpt` | Find and replace text on a slide |
+| `add_slide.scpt` | Add a new slide |
+| `delete_slide.scpt` | Delete a slide |

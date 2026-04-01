@@ -5,26 +5,42 @@ tell application "Keynote"
     tell front document
         set slideCount to count of slides
         set docName to name
+        set allOutput to "Document: " & docName & " - Slides: " & slideCount & "
+
+"
         
-        -- Get slide info
-        set slideInfo to {}
         repeat with i from 1 to slideCount
-            set slideName to name of slide i
-            set slideType to name of base layout of slide i
-            set end of slideInfo to "Slide " & i & ": " & slideName & " (layout: " & slideType & ")"
+            set slideInfo to "=== Slide " & i & " ===" & "
+"
+            set layoutName to name of base layout of slide i
+            set slideInfo to slideInfo & "Layout: " & layoutName & "
+"
+            
+            tell slide i
+                set txtCount to count of every text item
+                if txtCount > 0 then
+                    repeat with j from 1 to txtCount
+                        try
+                            set txtObj to text item j
+                            set txtContent to object text of txtObj
+                            if txtContent is not "" then
+                                if length of txtContent > 150 then
+                                    set slideInfo to slideInfo & "[" & j & "] " & (text 1 thru 150 of txtContent) & "... 
+"
+                                else
+                                    set slideInfo to slideInfo & "[" & j & "] " & txtContent & "
+"
+                                end if
+                            end if
+                        end try
+                    end repeat
+                end if
+            end tell
+            
+            set allOutput to allOutput & slideInfo & "
+"
         end repeat
         
-        return "Document: " & docName & "
-Slides: " & slideCount & "
-" & (join slideInfo, "
-")
+        return allOutput
     end tell
 end tell
-
-on join(theList, delimiter)
-    set oldDelimiters to AppleScript's text item delimiters
-    set AppleScript's text item delimiters to delimiter
-    set theString to theList as string
-    set AppleScript's text item delimiters to oldDelimiters
-    return theString
-end join
